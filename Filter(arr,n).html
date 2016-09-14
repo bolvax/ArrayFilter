@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html> 
+<meta charset="utf-8" />
+<body>
+<script>
+'use strict';
+// Проверка в конце
+var array = [1,2,3,4,5,1,2,3,4,5,1,2,3,4,5];
+var filter = function(arr,n){
+	var newTree = new BinaryTree(),
+		i = 0;
+	while(i < arr.length){
+		if(newTree.insert(arr[i])>n){
+			arr.splice(i,1);
+		}else{
+			i++;
+		}
+	};
+	return arr;
+};
+
+class Node {
+	constructor(data) {
+		this.value = 1;
+		this.data = data;
+		this.parent = null;
+		this.left = null;
+		this.right = null;
+	}
+}
+
+class BinaryTree {
+	constructor() {
+		this.root = null;
+	}
+	insert(data) {                         
+	   	var currentNode = new Node(data);
+        var trvrs = function(node) {
+	        if (data === node.data) {
+	            node.value++;
+	            return node.value;
+	        } else if (data > node.data) {
+	            if (!node.right) {
+	                node.right = currentNode;
+	                currentNode.parent = node;
+	                return node.value;
+	            } else
+	                return trvrs(node.right);
+	        } else if (data < node.data) {
+	            if (!node.left) {
+	                node.left = currentNode;
+	                currentNode.parent = node;
+	                return node.value;
+           		} else
+               		return trvrs(node.left);
+	        }
+	    };
+	    if(!this.root){
+	    	this.root = currentNode;
+	    	return 1;
+	    }
+	     return trvrs(this.root); 
+	}
+}
+
+console.log(filter(array,1));  //   Проверка
+
+</script>
+</body>
+
+</html>
